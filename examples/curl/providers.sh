@@ -24,10 +24,4 @@ curl -X POST https://veil-api.com/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{"model": "llama-3.1-8b-instant", "messages": [{"role": "user", "content": "Hi from Groq via Veil"}]}'
 
-# Custom endpoint (e.g., self-hosted vLLM)
-curl -X POST https://veil-api.com/v1/chat/completions \
-  -H "Authorization: Bearer $VEIL_API_KEY" \
-  -H "x-upstream-key: none" \
-  -H "x-upstream-provider: https://your-vllm-server.com" \
-  -H "Content-Type: application/json" \
-  -d '{"model": "your-model", "messages": [{"role": "user", "content": "Hi from self-hosted via Veil"}]}'
+# See all providers: curl https://veil-api.com/v1/providers

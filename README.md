@@ -111,13 +111,12 @@ client = OpenAI(
 # DeepSeek
 # x-upstream-provider: deepseek
 
-# Or any custom endpoint:
-# x-upstream-provider: https://your-custom-llm.com
+# See all providers: https://veil-api.com/v1/providers
 ```
 
 ## Supported Providers
 
-OpenAI, Anthropic, Google Gemini, Mistral, Cohere, xAI, AI21, Together, Groq, Fireworks, OpenRouter, Perplexity, Cerebras, SambaNova, Lepton, Nebius, Novita, Hyperbolic, Lambda, DeepInfra, DeepSeek, Moonshot, Zhipu, Yi, Baichuan, Stepfun, MiniMax, Qwen, SiliconFlow, Replicate, Baseten, HuggingFace, Portkey, Helicone, Codestral — or any custom `https://` URL.
+OpenAI, Anthropic, Google Gemini, Mistral, Cohere, xAI, AI21, Together, Groq, Fireworks, OpenRouter, Perplexity, Cerebras, SambaNova, Lepton, Nebius, Novita, Hyperbolic, Lambda, DeepInfra, DeepSeek, Moonshot, Zhipu, Yi, Baichuan, Stepfun, MiniMax, Qwen, SiliconFlow, Replicate, Baseten, HuggingFace, Portkey, Helicone, Codestral, Targon, Kluster, Chutes, Martian, Braintrust, Unify.
 
 ## Streaming
 
