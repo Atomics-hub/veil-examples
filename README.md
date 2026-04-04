@@ -78,7 +78,7 @@ curl -X POST https://veil-api.com/v1/redact \
 Response:
 ```json
 {
-  "redacted": "Contact <<VEIL_PERSON_a8f2>> at <<VEIL_EMAIL_c3d1>>, SSN <<VEIL_SSN_9e7b>>, card <<VEIL_CC_b1e8>>",
+  "redacted": "Contact <<VEIL_PERSON_a8f2c3d1e4f5>> at <<VEIL_EMAIL_ADDRESS_c3d1e4f5a8b2>>, SSN <<VEIL_US_SSN_9e7b1a2c3d4e>>, card <<VEIL_CREDIT_CARD_b1e8a2c3d4f5>>",
   "entities_found": 4,
   "entity_types": ["PERSON", "EMAIL_ADDRESS", "US_SSN", "CREDIT_CARD"]
 }
@@ -137,18 +137,18 @@ for chunk in stream:
 
 ## What Gets Redacted
 
-75+ entity types across 12 countries. PII, secrets, and crypto.
+79+ entity types across 18 countries. PII, secrets, infrastructure, and crypto.
 
 **Personal Information**
 | Entity | Example | Redacted As |
 |--------|---------|-------------|
-| Person names | Sarah Johnson | `<<VEIL_PERSON_a8f2>>` |
-| Email addresses | sarah@test.com | `<<VEIL_EMAIL_ADDRESS_c3d1>>` |
-| Phone numbers | 555-867-5309 | `<<VEIL_PHONE_NUMBER_4f2a>>` |
-| SSN | 078-05-1120 | `<<VEIL_US_SSN_9e7b>>` |
-| Credit cards | 4111111111111111 | `<<VEIL_CREDIT_CARD_b1e8>>` |
-| IP addresses | 192.168.1.1 | `<<VEIL_IP_ADDRESS_d4c2>>` |
-| Addresses | 742 Evergreen Terrace | `<<VEIL_LOCATION_f3a1>>` |
+| Person names | Sarah Johnson | `<<VEIL_PERSON_a8f2c3d1e4f5>>` |
+| Email addresses | sarah@test.com | `<<VEIL_EMAIL_ADDRESS_c3d1e4f5a8b2>>` |
+| Phone numbers | 555-867-5309 | `<<VEIL_PHONE_NUMBER_4f2a1b3c8d9e>>` |
+| SSN | 078-05-1120 | `<<VEIL_US_SSN_9e7b1a2c3d4e>>` |
+| Credit cards | 4111111111111111 | `<<VEIL_CREDIT_CARD_b1e8a2c3d4f5>>` |
+| IP addresses | 192.168.1.1 | `<<VEIL_IP_ADDRESS_d4c2e5f6a7b8>>` |
+| Addresses | 742 Evergreen Terrace | `<<VEIL_LOCATION_f3a1b2c3d4e5>>` |
 | Passports | US, UK, DE, IT, IN, KR | `<<VEIL_*_PASSPORT_...>>` |
 | Driver's licenses | US, DE, IT, KR | `<<VEIL_*_DRIVER_LICENSE_...>>` |
 | National IDs | UK NINO, DE ID, IT Fiscal, IN Aadhaar, PL PESEL, SG NRIC, etc. | `<<VEIL_*_...>>` |
@@ -172,6 +172,67 @@ for chunk in stream:
 | Litecoin | Lxxxx... | `<<VEIL_CRYPTO_WALLET_...>>` |
 | Monero | 4xxxx... | `<<VEIL_CRYPTO_WALLET_...>>` |
 
+**Context PII & Identifiers**
+| Entity | Example | Redacted As |
+|--------|---------|-------------|
+| Date of birth | DOB: 03/15/1990 | `<<VEIL_DATE_OF_BIRTH_...>>` |
+| Passwords | password=secret123 | `<<VEIL_PASSWORD_...>>` |
+| CVV | CVV: 123 | `<<VEIL_CVV_...>>` |
+| VIN | 1HGBH41JXMN109186 | `<<VEIL_VIN_...>>` |
+| IMEI | 35-209900-176148-1 | `<<VEIL_IMEI_...>>` |
+| EIN | 12-3456789 | `<<VEIL_US_EIN_...>>` |
+| SWIFT/BIC | CHASUS33XXX | `<<VEIL_SWIFT_BIC_...>>` |
+| Geo coordinates | lat: 37.7749 | `<<VEIL_GEO_COORDINATE_...>>` |
+| Database URLs | postgresql://user:pass@host/db | `<<VEIL_DATABASE_URL_...>>` |
+| Bearer tokens | Bearer eyJ... (40+ chars) | `<<VEIL_BEARER_TOKEN_...>>` |
+
+**International IDs (Canada, Brazil, France, Mexico)**
+| Entity | Example | Redacted As |
+|--------|---------|-------------|
+| Canada SIN | 046-454-286 | `<<VEIL_CA_SIN_...>>` |
+| Brazil CPF | 123.456.789-09 | `<<VEIL_BR_CPF_...>>` |
+| Brazil CNPJ | 11.222.333/0001-81 | `<<VEIL_BR_CNPJ_...>>` |
+| France NIR | 185067312345678 | `<<VEIL_FR_NIR_...>>` |
+| Mexico CURP | GOAP780101HDFRRL09 | `<<VEIL_MX_CURP_...>>` |
+
+## Confidence Scores
+
+The `/v1/redact` response includes per-entity confidence scores:
+
+```json
+{
+  "entities": [
+    {"type": "PERSON", "token": "<<VEIL_PERSON_...>>", "confidence": 0.92},
+    {"type": "EMAIL_ADDRESS", "token": "<<VEIL_EMAIL_ADDRESS_...>>", "confidence": 0.95}
+  ]
+}
+```
+
+## Allowlisting
+
+Skip specific entity types or values:
+
+```bash
+# Skip name redaction
+curl -X POST https://veil-api.com/v1/chat/completions \
+  -H "x-veil-allow: PERSON,LOCATION" \
+  ...
+
+# Skip specific values
+curl -X POST https://veil-api.com/v1/chat/completions \
+  -H "x-veil-allow-values: Acme Corp,support@acme.com" \
+  ...
+```
+
+## Audit Log
+
+View your redaction history for compliance:
+
+```bash
+curl https://veil-api.com/v1/audit \
+  -H "Authorization: Bearer your-veil-key"
+```
+
 ## Evasion Resistance
 
 Veil doesn't just use regex. It includes:
@@ -187,9 +248,13 @@ Veil doesn't just use regex. It includes:
 |----------|--------|-------------|
 | `/v1/chat/completions` | POST | OpenAI-compatible proxy with PII redaction |
 | `/v1/redact` | POST | Standalone text redaction (no LLM call) |
+| `/v1/keys/create` | POST | Create a free API key (email required) |
 | `/v1/usage` | GET | Usage statistics for your API key |
-| `/v1/billing/checkout` | POST | Create Stripe checkout session |
+| `/v1/audit` | GET | Redaction history for compliance |
+| `/v1/providers` | GET | List all supported LLM providers |
+| `/v1/demo` | POST | Try redaction without an API key |
 | `/health` | GET | Health check |
+| `/status` | GET | System status page |
 
 ## Pricing
 
