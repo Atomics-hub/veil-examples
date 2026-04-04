@@ -138,20 +138,40 @@ for chunk in stream:
 
 ## What Gets Redacted
 
+75+ entity types across 12 countries. PII, secrets, and crypto.
+
+**Personal Information**
 | Entity | Example | Redacted As |
 |--------|---------|-------------|
 | Person names | Sarah Johnson | `<<VEIL_PERSON_a8f2>>` |
 | Email addresses | sarah@test.com | `<<VEIL_EMAIL_ADDRESS_c3d1>>` |
 | Phone numbers | 555-867-5309 | `<<VEIL_PHONE_NUMBER_4f2a>>` |
-| Social Security Numbers | 078-05-1120 | `<<VEIL_US_SSN_9e7b>>` |
-| Credit card numbers | 4111111111111111 | `<<VEIL_CREDIT_CARD_b1e8>>` |
+| SSN | 078-05-1120 | `<<VEIL_US_SSN_9e7b>>` |
+| Credit cards | 4111111111111111 | `<<VEIL_CREDIT_CARD_b1e8>>` |
 | IP addresses | 192.168.1.1 | `<<VEIL_IP_ADDRESS_d4c2>>` |
-| Street addresses | 742 Evergreen Terrace | `<<VEIL_LOCATION_f3a1>>` |
-| US Passport numbers | | `<<VEIL_US_PASSPORT_...>>` |
-| Driver's license numbers | | `<<VEIL_US_DRIVER_LICENSE_...>>` |
-| IBAN codes | | `<<VEIL_IBAN_CODE_...>>` |
-| Medical license numbers | | `<<VEIL_MEDICAL_LICENSE_...>>` |
-| Locations/cities | Portland, OR | `<<VEIL_LOCATION_...>>` |
+| Addresses | 742 Evergreen Terrace | `<<VEIL_LOCATION_f3a1>>` |
+| Passports | US, UK, DE, IT, IN, KR | `<<VEIL_*_PASSPORT_...>>` |
+| Driver's licenses | US, DE, IT, KR | `<<VEIL_*_DRIVER_LICENSE_...>>` |
+| National IDs | UK NINO, DE ID, IT Fiscal, IN Aadhaar, PL PESEL, SG NRIC, etc. | `<<VEIL_*_...>>` |
+
+**Secrets & API Keys**
+| Entity | Example | Redacted As |
+|--------|---------|-------------|
+| AWS access keys | AKIAIOSFODNN7EXAMPLE | `<<VEIL_API_KEY_...>>` |
+| GitHub tokens | ghp_xxxx... | `<<VEIL_API_KEY_...>>` |
+| Stripe keys | sk_live_xxxx... | `<<VEIL_API_KEY_...>>` |
+| GCP API keys | AIzaxxxx... | `<<VEIL_API_KEY_...>>` |
+| Slack tokens | xoxb-xxxx... | `<<VEIL_API_KEY_...>>` |
+| JWTs | eyJhbG... | `<<VEIL_API_KEY_...>>` |
+| Private keys | -----BEGIN RSA PRIVATE KEY----- | `<<VEIL_API_KEY_...>>` |
+
+**Crypto Wallets**
+| Entity | Example | Redacted As |
+|--------|---------|-------------|
+| Ethereum | 0x742d35Cc... | `<<VEIL_CRYPTO_WALLET_...>>` |
+| Bitcoin (bech32) | bc1qar0... | `<<VEIL_CRYPTO_WALLET_...>>` |
+| Litecoin | Lxxxx... | `<<VEIL_CRYPTO_WALLET_...>>` |
+| Monero | 4xxxx... | `<<VEIL_CRYPTO_WALLET_...>>` |
 
 ## Evasion Resistance
 
