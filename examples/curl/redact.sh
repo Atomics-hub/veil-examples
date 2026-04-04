@@ -1,7 +1,7 @@
 #!/bin/bash
 # Standalone redaction — no LLM call
 
-curl -X POST https://veil-api-728549458468.us-central1.run.app/v1/redact \
+curl -X POST https://veil-api.com/v1/redact \
   -H "Authorization: Bearer $VEIL_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{

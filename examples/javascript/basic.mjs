@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  baseURL: 'https://veil-api-728549458468.us-central1.run.app/v1',
+  baseURL: 'https://veil-api.com/v1',
   defaultHeaders: {
     'Authorization': `Bearer ${process.env.VEIL_API_KEY}`,
     'x-upstream-key': process.env.OPENAI_API_KEY,

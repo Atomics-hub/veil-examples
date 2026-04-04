@@ -3,7 +3,7 @@ import os
 import requests
 
 response = requests.post(
-    "https://veil-api-728549458468.us-central1.run.app/v1/redact",
+    "https://veil-api.com/v1/redact",
     headers={"Authorization": f"Bearer {os.environ['VEIL_API_KEY']}"},
     json={
         "text": (

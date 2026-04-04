@@ -4,7 +4,7 @@ from openai import OpenAI
 
 client = OpenAI(
     api_key=os.environ["OPENAI_API_KEY"],
-    base_url="https://veil-api-728549458468.us-central1.run.app/v1",
+    base_url="https://veil-api.com/v1",
     default_headers={
         "Authorization": f"Bearer {os.environ['VEIL_API_KEY']}",
         "x-upstream-key": os.environ["OPENAI_API_KEY"],

@@ -2,7 +2,7 @@
 
 Drop-in proxy that strips personally identifiable information before it reaches any LLM provider. One line of code. Full restoration on the response.
 
-**Live API:** [https://veil-api-728549458468.us-central1.run.app](https://veil-api-728549458468.us-central1.run.app)
+**Live API:** [https://veil-api.com](https://veil-api.com)
 
 ## Quick Start
 
@@ -13,7 +13,7 @@ from openai import OpenAI
 
 client = OpenAI(
     api_key="your-openai-key",
-    base_url="https://veil-api-728549458468.us-central1.run.app/v1",
+    base_url="https://veil-api.com/v1",
     default_headers={
         "Authorization": "Bearer your-veil-key",
         "x-upstream-key": "your-openai-key",
@@ -38,7 +38,7 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  baseURL: 'https://veil-api-728549458468.us-central1.run.app/v1',
+  baseURL: 'https://veil-api.com/v1',
   defaultHeaders: {
     'Authorization': `Bearer ${process.env.VEIL_API_KEY}`,
     'x-upstream-key': process.env.OPENAI_API_KEY,
@@ -56,7 +56,7 @@ console.log(response.choices[0].message.content);
 ### cURL
 
 ```bash
-curl -X POST https://veil-api-728549458468.us-central1.run.app/v1/chat/completions \
+curl -X POST https://veil-api.com/v1/chat/completions \
   -H "Authorization: Bearer your-veil-key" \
   -H "x-upstream-key: your-openai-key" \
   -H "Content-Type: application/json" \
@@ -69,7 +69,7 @@ curl -X POST https://veil-api-728549458468.us-central1.run.app/v1/chat/completio
 ### Standalone Redaction (no LLM call)
 
 ```bash
-curl -X POST https://veil-api-728549458468.us-central1.run.app/v1/redact \
+curl -X POST https://veil-api.com/v1/redact \
   -H "Authorization: Bearer your-veil-key" \
   -H "Content-Type: application/json" \
   -d '{"text": "Contact Sarah at sarah@company.com, SSN 078-05-1120, card 4111111111111111"}'
@@ -91,7 +91,7 @@ Set the `x-upstream-provider` header to route through any provider:
 ```python
 # Together AI
 client = OpenAI(
-    base_url="https://veil-api-728549458468.us-central1.run.app/v1",
+    base_url="https://veil-api.com/v1",
     default_headers={
         "Authorization": "Bearer your-veil-key",
         "x-upstream-key": "your-together-key",

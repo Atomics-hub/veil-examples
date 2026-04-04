@@ -1,7 +1,7 @@
 #!/bin/bash
 # Basic cURL example — proxy through Veil to OpenAI
 
-curl -X POST https://veil-api-728549458468.us-central1.run.app/v1/chat/completions \
+curl -X POST https://veil-api.com/v1/chat/completions \
   -H "Authorization: Bearer $VEIL_API_KEY" \
   -H "x-upstream-key: $OPENAI_API_KEY" \
   -H "Content-Type: application/json" \

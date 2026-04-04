@@ -2,7 +2,7 @@
 import os
 from openai import OpenAI
 
-VEIL_BASE = "https://veil-api-728549458468.us-central1.run.app/v1"
+VEIL_BASE = "https://veil-api.com/v1"
 VEIL_KEY = os.environ["VEIL_API_KEY"]
 
 prompt = "Summarize: Customer John Smith (john@test.com) wants a refund for order #12345."
