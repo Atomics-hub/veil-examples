@@ -15,6 +15,12 @@ This repo is intentionally public and intentionally limited:
 - Use an OpenAI-compatible API surface
 - Start with a hosted product instead of building your own redaction layer
 
+## Start Free
+
+- Get a free API key: [veil-api.com/#pricing](https://veil-api.com/#pricing)
+- Read the docs: [veil-api.com/docs](https://veil-api.com/docs)
+- Test the live demo: [veil-api.com/#try](https://veil-api.com/#try)
+
 ## Get Started
 
 1. Sign up at [veil-api.com](https://veil-api.com)
@@ -129,3 +135,8 @@ curl -X POST https://veil-api.com/v1/chat/completions \
 ## Hosted Product
 
 Veil is a hosted API product. This repo is examples-only and does not include the private backend, infrastructure, detection pipeline, or internal operations code.
+
+If you want to use Veil in production, start here:
+- [Get a free API key](https://veil-api.com/#pricing)
+- [Read the docs](https://veil-api.com/docs)
+- [See all examples in this repo](https://github.com/Atomics-hub/veil-examples/tree/main/examples)
