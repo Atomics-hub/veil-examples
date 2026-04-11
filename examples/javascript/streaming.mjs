@@ -1,14 +1,11 @@
 // Streaming — tokens arrive in real-time with PII restored.
 import OpenAI from 'openai';
+import { createVeilOpenAIConfig } from '@a5omic/veil';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: 'https://veil-api.com/v1',
-  defaultHeaders: {
-    'Authorization': `Bearer ${process.env.VEIL_API_KEY}`,
-    'x-upstream-key': process.env.OPENAI_API_KEY,
-  }
-});
+const openai = new OpenAI(createVeilOpenAIConfig({
+  veilApiKey: process.env.VEIL_API_KEY,
+  upstreamApiKey: process.env.OPENAI_API_KEY,
+}));
 
 const stream = await openai.chat.completions.create({
   model: 'gpt-4o-mini',

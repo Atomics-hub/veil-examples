@@ -1,6 +1,6 @@
 # Veil Examples
 
-Examples for integrating with the hosted [Veil API](https://veil-api.com).
+Examples and the official JavaScript helpers for integrating with the hosted [Veil API](https://veil-api.com).
 
 Veil lets you send prompts through a privacy layer before they reach OpenAI or another provider. Sensitive data is redacted on the way out and restored on the response back.
 
@@ -20,6 +20,12 @@ This repo is intentionally public and intentionally limited:
 - Get a free API key: [veil-api.com/#pricing](https://veil-api.com/#pricing)
 - Read the docs: [veil-api.com/docs](https://veil-api.com/docs)
 - Test the live demo: [veil-api.com/#try](https://veil-api.com/#try)
+
+## Install the JS Package
+
+```bash
+npm install @a5omic/veil openai
+```
 
 ## Get Started
 
@@ -73,15 +79,12 @@ print(response.choices[0].message.content)
 
 ```javascript
 import OpenAI from 'openai';
+import { createVeilOpenAIConfig } from '@a5omic/veil';
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: 'https://veil-api.com/v1',
-  defaultHeaders: {
-    Authorization: `Bearer ${process.env.VEIL_API_KEY}`,
-    'x-upstream-key': process.env.OPENAI_API_KEY,
-  },
-});
+const client = new OpenAI(createVeilOpenAIConfig({
+  veilApiKey: process.env.VEIL_API_KEY,
+  upstreamApiKey: process.env.OPENAI_API_KEY,
+}));
 
 const response = await client.chat.completions.create({
   model: 'gpt-4o-mini',
@@ -94,6 +97,23 @@ const response = await client.chat.completions.create({
 });
 
 console.log(response.choices[0].message.content);
+```
+
+## Redact-Only Example: JavaScript
+
+```javascript
+import { VeilClient } from '@a5omic/veil';
+
+const veil = new VeilClient({
+  apiKey: process.env.VEIL_API_KEY,
+});
+
+const result = await veil.redact({
+  text: 'admit date: 03/15/2024, patient age: 92, MRN: AB123456',
+  compliance: 'hipaa',
+});
+
+console.log(result);
 ```
 
 ## Quick Example: cURL
@@ -121,10 +141,17 @@ curl -X POST https://veil-api.com/v1/chat/completions \
 - [examples/python/redact_only.py](examples/python/redact_only.py)
 - [examples/python/multi_provider.py](examples/python/multi_provider.py)
 - [examples/javascript/basic.mjs](examples/javascript/basic.mjs)
+- [examples/javascript/redact_only.mjs](examples/javascript/redact_only.mjs)
 - [examples/javascript/streaming.mjs](examples/javascript/streaming.mjs)
 - [examples/curl/basic.sh](examples/curl/basic.sh)
 - [examples/curl/redact.sh](examples/curl/redact.sh)
 - [examples/curl/providers.sh](examples/curl/providers.sh)
+
+## Compliance Modes
+
+- `x-veil-compliance: hipaa` and `x-veil-compliance: coppa` are available on Growth+ plans.
+- Compliance mode adds stricter redaction plus audit logging for regulated text workflows.
+- Compliance mode is intentionally text-only today and does not support streaming or multimodal image/audio requests.
 
 ## Docs
 

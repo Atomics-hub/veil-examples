@@ -1,0 +1,46 @@
+{
+  "name": "@a5omic/veil",
+  "version": "0.1.0",
+  "description": "Official JavaScript helpers for the hosted Veil API",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "veil",
+    "pii",
+    "privacy",
+    "redaction",
+    "openai",
+    "llm",
+    "hipaa",
+    "coppa"
+  ],
+  "homepage": "https://veil-api.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Atomics-hub/veil-examples.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Atomics-hub/veil-examples/issues"
+  },
+  "license": "MIT"
+}
