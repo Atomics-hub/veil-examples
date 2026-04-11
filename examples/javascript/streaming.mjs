@@ -1,6 +1,6 @@
 // Streaming — tokens arrive in real-time with PII restored.
 import OpenAI from 'openai';
-import { createVeilOpenAIConfig } from '@a5omic/veil';
+import { createVeilOpenAIConfig } from 'a5omic-veil';
 
 const openai = new OpenAI(createVeilOpenAIConfig({
   veilApiKey: process.env.VEIL_API_KEY,

@@ -1,5 +1,5 @@
 {
-  "name": "@a5omic/veil",
+  "name": "a5omic-veil",
   "version": "0.1.0",
   "description": "Official JavaScript helpers for the hosted Veil API",
   "type": "module",

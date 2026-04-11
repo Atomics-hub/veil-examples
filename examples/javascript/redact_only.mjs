@@ -1,5 +1,5 @@
 // Redact-only example using the official Veil JS package.
-import { VeilClient } from '@a5omic/veil';
+import { VeilClient } from 'a5omic-veil';
 
 const veil = new VeilClient({
   apiKey: process.env.VEIL_API_KEY,

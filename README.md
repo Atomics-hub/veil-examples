@@ -24,7 +24,7 @@ This repo is intentionally public and intentionally limited:
 ## Install the JS Package
 
 ```bash
-npm install @a5omic/veil openai
+npm install a5omic-veil openai
 ```
 
 ## Get Started
@@ -79,7 +79,7 @@ print(response.choices[0].message.content)
 
 ```javascript
 import OpenAI from 'openai';
-import { createVeilOpenAIConfig } from '@a5omic/veil';
+import { createVeilOpenAIConfig } from 'a5omic-veil';
 
 const client = new OpenAI(createVeilOpenAIConfig({
   veilApiKey: process.env.VEIL_API_KEY,
@@ -102,7 +102,7 @@ console.log(response.choices[0].message.content);
 ## Redact-Only Example: JavaScript
 
 ```javascript
-import { VeilClient } from '@a5omic/veil';
+import { VeilClient } from 'a5omic-veil';
 
 const veil = new VeilClient({
   apiKey: process.env.VEIL_API_KEY,
