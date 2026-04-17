@@ -9,6 +9,9 @@ export interface VeilHeaderOptions {
   veilApiKey: string;
   upstreamApiKey?: string;
   upstreamProvider?: string;
+  inputPolicy?: string;
+  outputPolicy?: string;
+  hallucinationFlags?: string;
   headers?: Record<string, string>;
 }
 
@@ -62,5 +65,9 @@ export class VeilClient {
   redact(options: RedactOptions): Promise<any>;
   providers(options?: { signal?: AbortSignal }): Promise<any>;
   usage(options?: { signal?: AbortSignal }): Promise<any>;
+  firewallInput(body: Record<string, unknown>, options?: { signal?: AbortSignal }): Promise<any>;
+  firewallOutput(body: Record<string, unknown>, options?: { signal?: AbortSignal }): Promise<any>;
+  firewallMcp(body: Record<string, unknown>, options?: { signal?: AbortSignal }): Promise<any>;
+  firewallAudit(options?: { limit?: number; signal?: AbortSignal }): Promise<any>;
   audit(options?: AuditOptions): Promise<any>;
 }
