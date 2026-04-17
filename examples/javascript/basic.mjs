@@ -1,10 +1,12 @@
-// Basic Veil + OpenAI example — PII redacted before reaching GPT.
+// Basic Veil AI Firewall + OpenAI example.
 import OpenAI from 'openai';
 import { createVeilOpenAIConfig } from 'a5omic-veil';
 
 const openai = new OpenAI(createVeilOpenAIConfig({
   veilApiKey: process.env.VEIL_API_KEY,
   upstreamApiKey: process.env.OPENAI_API_KEY,
+  inputPolicy: 'block',
+  outputPolicy: 'monitor',
 }));
 
 const response = await openai.chat.completions.create({

@@ -1,8 +1,8 @@
-# Veil Examples
+# Veil AI Firewall Examples
 
-Examples and the official JavaScript helpers for integrating with the hosted [Veil API](https://veil-api.com).
+Examples and the official JavaScript helpers for integrating with the hosted [Veil AI Firewall API](https://veil-api.com).
 
-Veil lets you send prompts through a privacy layer before they reach OpenAI or another provider. Sensitive data is redacted on the way out and restored on the response back.
+Veil lets you send prompts through an AI firewall before they reach OpenAI or another provider. Sensitive data is redacted on the way out and restored on the response back, and you can turn on prompt injection detection, output filtering, hallucination flags, and MCP inspection.
 
 This repo is intentionally public and intentionally limited:
 - It shows how to use Veil
@@ -11,9 +11,11 @@ This repo is intentionally public and intentionally limited:
 ## Why Veil
 
 - Keep names, emails, phone numbers, SSNs, and other sensitive values out of upstream LLM requests
+- Detect prompt injection before it reaches the model
+- Inspect risky output and MCP tool traffic with the same API
 - Keep your existing provider and model choices
 - Use an OpenAI-compatible API surface
-- Start with a hosted product instead of building your own redaction layer
+- Start with a hosted product instead of building your own redaction and runtime security layer
 
 ## Start Free
 
@@ -39,6 +41,9 @@ npm install a5omic-veil openai
 - `Authorization: Bearer <VEIL_API_KEY>`
 - `x-upstream-key: <YOUR_PROVIDER_KEY>`
 - Optional: `x-upstream-provider: openai|groq|together|mistral|...`
+- Optional: `x-veil-input-policy: off|monitor|block`
+- Optional: `x-veil-output-policy: off|monitor|block`
+- Optional: `x-veil-hallucination-flags: off|on`
 
 ## Environment Variables
 
@@ -59,6 +64,8 @@ client = OpenAI(
     default_headers={
         "Authorization": f"Bearer {os.environ['VEIL_API_KEY']}",
         "x-upstream-key": os.environ["OPENAI_API_KEY"],
+        "x-veil-input-policy": "block",
+        "x-veil-output-policy": "monitor",
     },
 )
 
@@ -84,6 +91,8 @@ import { createVeilOpenAIConfig } from 'a5omic-veil';
 const client = new OpenAI(createVeilOpenAIConfig({
   veilApiKey: process.env.VEIL_API_KEY,
   upstreamApiKey: process.env.OPENAI_API_KEY,
+  inputPolicy: 'block',
+  outputPolicy: 'monitor',
 }));
 
 const response = await client.chat.completions.create({
@@ -137,10 +146,12 @@ curl -X POST https://veil-api.com/v1/chat/completions \
 ## Example Files
 
 - [examples/python/basic.py](examples/python/basic.py)
+- [examples/python/firewall_input.py](examples/python/firewall_input.py)
 - [examples/python/streaming.py](examples/python/streaming.py)
 - [examples/python/redact_only.py](examples/python/redact_only.py)
 - [examples/python/multi_provider.py](examples/python/multi_provider.py)
 - [examples/javascript/basic.mjs](examples/javascript/basic.mjs)
+- [examples/javascript/firewall_mcp.mjs](examples/javascript/firewall_mcp.mjs)
 - [examples/javascript/redact_only.mjs](examples/javascript/redact_only.mjs)
 - [examples/javascript/streaming.mjs](examples/javascript/streaming.mjs)
 - [examples/curl/basic.sh](examples/curl/basic.sh)

@@ -1,7 +1,7 @@
 {
   "name": "a5omic-veil",
   "version": "0.1.0",
-  "description": "Official JavaScript helpers for the hosted Veil API",
+  "description": "Official JavaScript helpers for the hosted Veil AI Firewall API",
   "type": "module",
   "exports": {
     ".": {
@@ -26,6 +26,9 @@
   },
   "keywords": [
     "veil",
+    "ai-firewall",
+    "prompt-injection",
+    "mcp",
     "pii",
     "privacy",
     "redaction",

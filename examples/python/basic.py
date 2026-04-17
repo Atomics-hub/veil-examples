@@ -1,4 +1,4 @@
-"""Basic Veil + OpenAI example — PII redacted before reaching GPT."""
+"""Basic Veil AI Firewall + OpenAI example."""
 import os
 from openai import OpenAI
 
@@ -8,6 +8,8 @@ client = OpenAI(
     default_headers={
         "Authorization": f"Bearer {os.environ['VEIL_API_KEY']}",
         "x-upstream-key": os.environ["OPENAI_API_KEY"],
+        "x-veil-input-policy": "block",
+        "x-veil-output-policy": "monitor",
     },
 )
 

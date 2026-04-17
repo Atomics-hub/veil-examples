@@ -56,6 +56,9 @@ export function createVeilHeaders({
   veilApiKey,
   upstreamApiKey,
   upstreamProvider,
+  inputPolicy,
+  outputPolicy,
+  hallucinationFlags,
   headers = {},
 } = {}) {
   const resolved = { ...headers };
@@ -70,6 +73,18 @@ export function createVeilHeaders({
     resolved["x-upstream-provider"] = requireNonEmptyString("upstreamProvider", upstreamProvider);
   }
 
+  if (inputPolicy != null) {
+    resolved["x-veil-input-policy"] = requireNonEmptyString("inputPolicy", inputPolicy);
+  }
+
+  if (outputPolicy != null) {
+    resolved["x-veil-output-policy"] = requireNonEmptyString("outputPolicy", outputPolicy);
+  }
+
+  if (hallucinationFlags != null) {
+    resolved["x-veil-hallucination-flags"] = requireNonEmptyString("hallucinationFlags", hallucinationFlags);
+  }
+
   return resolved;
 }
 
@@ -77,6 +92,9 @@ export function createVeilOpenAIConfig({
   veilApiKey,
   upstreamApiKey,
   upstreamProvider,
+  inputPolicy,
+  outputPolicy,
+  hallucinationFlags,
   baseURL = DEFAULT_BASE_URL,
   defaultHeaders = {},
   ...rest
@@ -91,6 +109,9 @@ export function createVeilOpenAIConfig({
       veilApiKey,
       upstreamApiKey: resolvedUpstreamKey,
       upstreamProvider,
+      inputPolicy,
+      outputPolicy,
+      hallucinationFlags,
       headers: defaultHeaders,
     }),
   };
@@ -219,6 +240,34 @@ export class VeilClient {
 
   usage({ signal } = {}) {
     return this.request("/usage", { signal });
+  }
+
+  firewallInput(body, { signal } = {}) {
+    return this.request("/firewall/input", {
+      method: "POST",
+      body,
+      signal,
+    });
+  }
+
+  firewallOutput(body, { signal } = {}) {
+    return this.request("/firewall/output", {
+      method: "POST",
+      body,
+      signal,
+    });
+  }
+
+  firewallMcp(body, { signal } = {}) {
+    return this.request("/firewall/mcp", {
+      method: "POST",
+      body,
+      signal,
+    });
+  }
+
+  firewallAudit({ limit = 50, signal } = {}) {
+    return this.request(buildPath("/audit/firewall", { limit }), { signal });
   }
 
   audit({ compliance = false, verify = false, limit = 50, signal } = {}) {
